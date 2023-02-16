@@ -12,7 +12,7 @@ export interface IGame {
     location: string
 }
 export interface ISchedule {
-    games: Array < IGame >
+    games: Array <IGame>
 }
 
 export interface IScheduleViewModel {
