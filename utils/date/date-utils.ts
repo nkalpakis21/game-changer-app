@@ -1,5 +1,5 @@
 export const getDayOfWeek = (date: Date): string => {
-    const options = {weekday: "short"};
+    const options: {} = {weekday: "short"};
     return new Intl.DateTimeFormat("en-US", options).format(date)
 }
 
