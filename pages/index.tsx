@@ -3,20 +3,21 @@ import Head from 'next/head'
 import { Inter } from '@next/font/google'
 import { useEffect, useState } from 'react'
 import ScheduleComponent from '../components/schedule/ScheduleComponent'
-import { IGame, ISchedule } from '../types/ISchedule'
+import { ISchedule, IScheduleViewModel } from '../types/ISchedule'
 import { CircularProgress, Container } from '@mui/material'
+import { getViewModel } from '@/utils/schedule/schedule-utils'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
-  const [schedule, setSchedule] = useState<{[key: string]: Array<IGame>} | null>(null);
+  const [schedule, setSchedule] = useState<ISchedule | null>(null);
 
   useEffect(() => {
     setLoading(true);
     const getSchedule = async(scheduleId: string) => {
       await fetch(`/api/schedule/${scheduleId}`)
-        .then((response) => response.json() as Promise <{schedule: {[key: string]: Array<IGame>}, date: Date}>)
+        .then((response) => response.json())
         .then((data) => {
           setSchedule(data.schedule);
         }).finally(() => setLoading(false));
@@ -32,15 +33,8 @@ export default function Home() {
     return <>No Schedule Found!</>
   }
 
-
-
-  const scheduleVM = Object.entries(schedule).map((section) => {
-    return {
-        header: section[0],
-        games: section[1],
-    }
-  });
-
+  const scheduleVM: IScheduleViewModel = getViewModel(schedule);
+  console.log(scheduleVM)
   return (
     <>
       <Head>
@@ -51,7 +45,7 @@ export default function Home() {
       </Head>
       <main>
         <Container sx={{mt: 4}}>
-          <ScheduleComponent schedule={scheduleVM} />
+          <ScheduleComponent viewModel={scheduleVM} />
         </Container>
       </main>
     </>

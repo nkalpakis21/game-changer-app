@@ -16,5 +16,8 @@ export interface ISchedule {
 }
 
 export interface IScheduleViewModel {
-    [key: string]: Array<IGame>
+    sections: Array<{
+        header: string,
+        games: Array<IGame>
+    }>
 }
