@@ -1,6 +1,5 @@
-import { IGame } from "@/types/ISchedule"
 import { Grid, Typography } from "@mui/material"
-import { grey, red } from "@mui/material/colors"
+import { grey } from "@mui/material/colors"
 
 interface IProps {
     date: {dayOfWeek: string, dayOfMonth: string },
@@ -13,7 +12,7 @@ export default function GameComponent({date, header, description}: IProps) {
             container 
             padding={4} 
             sx={{
-                "&:nth-child(2)": {
+                "&:nth-of-type(1)": {
                     borderRadius: '5px 5px 0px 0px',
                     border: 'solid', 
                     borderColor: grey[300],

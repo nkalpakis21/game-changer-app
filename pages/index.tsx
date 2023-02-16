@@ -4,7 +4,7 @@ import { Inter } from '@next/font/google'
 import { useEffect, useState } from 'react'
 import ScheduleComponent from '../components/schedule/ScheduleComponent'
 import { ISchedule, IScheduleViewModel } from '../types/ISchedule'
-import { CircularProgress, Container } from '@mui/material'
+import { CircularProgress, Container, Typography } from '@mui/material'
 import { getViewModel } from '@/utils/schedule/schedule-utils'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -12,15 +12,22 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
   const [schedule, setSchedule] = useState<ISchedule | null>(null);
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
     setLoading(true);
+    setError('');
     const getSchedule = async(scheduleId: string) => {
-      await fetch(`/api/schedule/${scheduleId}`)
+      fetch(`/api/schedule/${scheduleId}`)
         .then((response) => response.json())
         .then((data) => {
           setSchedule(data.schedule);
-        }).finally(() => setLoading(false));
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          setError(error);
+        })
+        .finally(() => setLoading(false));
     }
     getSchedule('some-schedule-id');
   }, [])
@@ -30,11 +37,11 @@ export default function Home() {
   }
 
   if(!schedule) {
-    return <>No Schedule Found!</>
+    return <Typography variant="h4">No Schedule Found!</Typography>
   }
 
   const scheduleVM: IScheduleViewModel = getViewModel(schedule);
-  console.log(scheduleVM)
+
   return (
     <>
       <Head>
