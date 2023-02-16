@@ -3,7 +3,7 @@ import { getGameDescription, getGameHeader } from "../../utils/schedule/game-uti
 import { IScheduleViewModel } from "../../types/ISchedule"
 import { getDayOfWeek } from "../../utils/date/date-utils"
 import GameComponent from "./GameComponent"
-import { Grid, Typography } from "@mui/material"
+import { Box, Grid, Typography } from "@mui/material"
 
 interface IProps {
     viewModel: IScheduleViewModel
@@ -12,7 +12,7 @@ interface IProps {
 export default function ScheduleComponent({viewModel}:IProps) {
 
     return (
-        <>
+        <Box>
             <Typography variant="h3" sx={{mb: 6}} style={{fontWeight: 'bolder'}}>Schedule</Typography>
             <Grid container spacing={10}>
                 {viewModel.sections.map((section) => (
@@ -31,6 +31,6 @@ export default function ScheduleComponent({viewModel}:IProps) {
                     </Grid>
                 ))}
             </Grid>
-        </>
+        </Box>
     )
 }

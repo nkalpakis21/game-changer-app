@@ -51,7 +51,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Container sx={{mt: 4}}>
+        <Container sx={{my: 5}}>
           <ScheduleComponent viewModel={scheduleVM} />
         </Container>
       </main>
